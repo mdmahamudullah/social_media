@@ -20,11 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['email'] = $row['email'];
     
     // Redirect to homepage.html
-    header("Location: homepage.html");
+    header("Location: profile.php");
     exit();
   } else {
     // Invalid credentials, show error message
-    echo "Invalid email or password.";
+    header("Location: index.html");
   }
 
   // Close the database connection
