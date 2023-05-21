@@ -89,6 +89,18 @@ $conn->close();
       max-width: 300px;
       max-height: 300px;
     }
+
+    .post-profile-image{
+      width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .profile-name-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
   </style>
 </head>
 <body>
@@ -114,6 +126,8 @@ $conn->close();
   
   
     <button type="submit"><a href="post_photo.php">Post Photo</a></button>
+
+    <button type="submit"><a href="search.php">search</a></button>
   
   
   <!-- Add update form fields here -->
@@ -128,7 +142,11 @@ $conn->close();
     $pic = $postRow['pic'];
   ?>
   <div class="post-container">
-    <h2><?php echo $firstName; ?> <?php echo $last_name; ?></h2>
+    <div class="profile-name-container">
+      <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Image" class="post-profile-image">
+      <h2><?php echo $firstName; ?> <?php echo $last_name; ?></h2>
+    </div>
+    
     <p class="post-date"><?php echo $postDate; ?></p>
     <p class="post-message"><?php echo $message; ?></p>
     <?php if ($pic): ?>
@@ -140,3 +158,4 @@ $conn->close();
   ?>
 </body>
 </html>
+ 
