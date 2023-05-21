@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['email'] = $row['email'];
     
     // Redirect to homepage.html
-    header("Location: profile.php");
+    header("Location: homepage.php");
     exit();
   } else {
     // Invalid credentials, show error message
