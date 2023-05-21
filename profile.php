@@ -47,7 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
+// Fetch user's first name from profiles table
+$profileSql = "SELECT first_name FROM profiles WHERE id = '$user_id'";
+$profileResult = $conn->query($profileSql);
+$profileRow = $profileResult->fetch_assoc();
+$firstName = $profileRow['first_name'];
 
+// Fetch all posts of the user from posts table
+$postSql = "SELECT post_date, massage, pic FROM posts WHERE user_id = '$user_id' ORDER BY id DESC";
+$postResult = $conn->query($postSql);
 // Close the database connection
 $conn->close();
 ?>
@@ -64,6 +72,22 @@ $conn->close();
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
+    }
+    .post-container {
+      margin-bottom: 20px;
+    }
+
+    .post-date {
+      font-weight: bold;
+    }
+
+    .post-message {
+      margin-bottom: 10px;
+    }
+
+    .post-image {
+      max-width: 300px;
+      max-height: 300px;
     }
   </style>
 </head>
@@ -84,7 +108,35 @@ $conn->close();
   <p>Mobile Number: <?php echo $mobile_number; ?></p>
   <p>Email: <?php echo $email; ?></p>
   <a href="editProfile.php">Edit your profile</a>
+  <!-- Add post buttons here -->
+  
+    <button  type="submit"><a href="post.php">post</a></button>
+  
+  
+    <button type="submit"><a href="post_photo.php">Post Photo</a></button>
+  
   
   <!-- Add update form fields here -->
+  <h1>User Posts</h1>
+  
+  
+  <?php
+  // Display user's posts
+  while ($postRow = $postResult->fetch_assoc()) {
+    $postDate = $postRow['post_date'];
+    $message = $postRow['massage'];
+    $pic = $postRow['pic'];
+  ?>
+  <div class="post-container">
+    <h2><?php echo $firstName; ?> <?php echo $last_name; ?></h2>
+    <p class="post-date"><?php echo $postDate; ?></p>
+    <p class="post-message"><?php echo $message; ?></p>
+    <?php if ($pic): ?>
+      <img src="<?php echo $pic; ?>" alt="Post Image" class="post-image">
+    <?php endif; ?>
+  </div>
+  <?php
+  }
+  ?>
 </body>
 </html>
