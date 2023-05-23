@@ -66,7 +66,9 @@ $conn->close();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
+  <link rel="stylesheet" href="css/styles.css">
   <style>
+   
     .profile-picture {
       width: 100px;
       height: 100px;
@@ -75,6 +77,7 @@ $conn->close();
     }
     .post-container {
       margin-bottom: 20px;
+      padding-left:200px
     }
 
     .post-date {
@@ -104,6 +107,15 @@ $conn->close();
   </style>
 </head>
 <body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="button-group">
+      <button><a href="homepage.php">Home</a></button>
+      <button><a href="profile.php">Profile</a></button>
+    </div>
+  </div>
+  <!-- profile -->
+
   <h1>Profile</h1>
   <img class="profile-picture" src="<?php echo $profile_picture; ?>" alt="<?php echo $profile_picture; ?>">
   <form action="" method="POST" enctype="multipart/form-data">

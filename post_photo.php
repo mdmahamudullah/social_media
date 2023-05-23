@@ -16,10 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Handle image upload
   $targetDir = "photos/"; // Directory to store uploaded images
-  $randomName = generateRandomName(8); // Generate a random name for the image
-  $targetFile = $targetDir . $randomName . '.jpg'; // Construct the target file path
+  $targetFile = null; // Initialize target file variable
 
   if (isset($_FILES['pic']) && $_FILES['pic']['error'] === UPLOAD_ERR_OK) {
+    $randomName = generateRandomName(8); // Generate a random name for the image
+    $targetFile = $targetDir . $randomName . '.jpg'; // Construct the target file path
+
     // Move the uploaded image to the target directory
     move_uploaded_file($_FILES['pic']['tmp_name'], $targetFile);
   }
@@ -28,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $sql = "INSERT INTO posts (user_id, massage, pic, post_date) VALUES ('$user_id', '$message', '$targetFile', '$postDate')";
   if ($conn->query($sql) === TRUE) {
     // Post inserted successfully, redirect to the profile page or any other appropriate page
-    header("Location: profile.php");
+    header("Location: profile.php"); 
     exit();
   } else {
     // Error inserting post, handle error

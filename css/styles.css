@@ -1,0 +1,231 @@
+.homepage-body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f1fff2;
+    color: #333333;
+  }
+
+.navbar {
+    background-color: #32a852;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 5%;
+    height: 100vh;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+  }
+  .navbar button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .navbar a {
+    display: inline-block;
+    background-color: #8bef77;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 10px 0px;
+    font-size: 16px;
+    
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .navbar a:hover {
+    background-color: #beffb0;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .button-group button a{
+    background-color: #edffde;
+    width: 100%;
+    margin-left: -25%;
+    border: none;
+    color: #363636;
+    font-size: 20px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    
+    /* width: 100%; */
+  }
+  /* .button-group button:hover {
+    background-color: #389f20;
+  } */
+
+  /* post , search buttons in home  */
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    margin-bottom: 10px;
+
+    width: 780px;
+  }
+  .button-container button {
+    background-color: transparent;
+    border: 2px solid #42b72a;
+    color: #212121;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex: 1;
+    margin: 0 5px;
+    margin-top: 0px;
+  }
+  .button-container button:hover {
+    background-color: #59b345;
+  }
+
+
+  /* pic post */
+  .upload-container {
+    width: 20%;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+    position: fixed;
+    top: 0;
+    left: 5%;
+    
+    height: 100vh;
+    z-index: 2;
+  }
+
+  .upload-container label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  .upload-container input[type="file"],
+  .upload-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    resize: none;
+  }
+
+  .upload-container button[type="submit"] {
+    background-color: #4fa43e;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .upload-container button[type="submit"]:hover {
+    background-color: #2b8519;
+  }
+
+
+  .upload-container-container{
+    
+    overflow: hidden;
+    
+    
+    display: flex;
+    justify-content: center;
+  }
+
+      /* .button-group {
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+    }
+    .button-group button {
+      margin-right: 10px;
+      background-color: #007bff;
+      border: none;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button-group button:hover {
+      background-color: #0056b3;
+    } */
+
+        /* body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f7f7;
+      color: #333333;
+    } */
+
+
+        /* Add your CSS styles here */
+
+        .fix-width-container{
+            margin-left: 25%;
+          }
+          .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+      
+          .post-container {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+          }
+          .profile-name-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+          }
+          .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+          }
+          .post-name {
+            font-weight: bold;
+            margin: 0;
+          }
+          .post-date {
+            font-weight: bold;
+            margin: 0;
+            color: #777777;
+            text-align:right;
+          }
+          .post-message {
+            margin-bottom: 10px;
+          }
+          .post-image {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+          }
