@@ -1,13 +1,17 @@
-.homepage-body {
+
+
+/* .homepage-body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #94c798;
     color: #333333;
-  }
-
-.navbar {
-    background-color: #32a852;
+  } */
+/* ...............................................
+.........................navbar...................
+.................................................. */
+/* .navbar {
+    background-color: #0891b2;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: fixed;
@@ -47,7 +51,7 @@
     gap: 10px;
     margin-left: auto;
     margin-right: auto;
-  }
+  } */
   .button-group button a{
     background-color: #edffde;
     width: 150px;
@@ -217,6 +221,14 @@
             border-radius: 5px;
             width: 980px;
           } */
+          
+          .post-container {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+          }
           .profile-name-container {
             display: flex;
             align-items: center;
@@ -250,46 +262,35 @@
 
 
           /* ********************** */
-              .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .post-container {
-      background-color: #ffffff;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      border-radius: 5px;
-    }
-    .profile-name-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .profile-image {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-    .post-name {
-      font-weight: bold;
-      margin: 0;
-    }
-    .post-date {
-      font-weight: bold;
-      margin: 0;
-      color: #777777;
-      text-align:right;
-    }
-    .post-message {
-      margin-bottom: 10px;
-    }
-    .post-image {
-      max-width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
+      
+          
+          .profile-name-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+          }
+          .profile-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+          }
+          .post-name {
+            font-weight: bold;
+            margin: 0;
+          }
+          .post-date {
+            font-weight: bold;
+            margin: 0;
+            color: #777777;
+            text-align:right;
+          }
+          .post-message {
+            margin-bottom: 10px;
+          }
+          .post-image {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+          }

@@ -10,9 +10,7 @@
   <style>
     /* Add your CSS styles here */
 
-    .fix-width-container{
-      margin-left: 25%;
-    }
+
     .container {
       max-width: 1000px;
       margin: 0 auto;
@@ -20,7 +18,7 @@
     }
 
     .post-container {
-      background-color: #ffffff;
+      background-color: #0891b2;
       padding: 20px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
@@ -65,6 +63,7 @@
     <div class="button-group">
       <button><a href="homepage.php">Home</a></button>
       <button><a href="profile.php">Profile</a></button>
+      <button><a href="index.html">Log out</a></button>
     </div>
   </div>
 
@@ -77,17 +76,25 @@
       <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
       <button type="submit">Post</button>
     </form>
-  </div>
+   </div>
   </div>
   
   
 
-  <!-- Buttons -->
+  <!--search Buttons -->
+  <div class="style">
+
+  </div>
   <div class="fix-width-container"> 
   <div class="container">
-      <div class="button-container">
-      <input type="text" name="search_input" placeholder="Enter a name">
-      <button type="submit">Search</button>
+      <div class="button-container ">
+          <!-- <input type="text" name="search_input" placeholder="Enter a name">
+          <button type="submit"><a href="temp.php">search</a></button> -->
+          <form action="search.php" method="POST">
+    <input type="text" name="search_input" placeholder="Enter a name" required>
+    <button type="submit">Search</button>
+    </form>
+
       </div>
 
     <!-- Random Posts -->
