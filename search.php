@@ -47,51 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>Search</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
 
-    .post-container {
-      background-color: transparent;
-      padding: 20px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-      border-radius: 5px;
-    }
-    .profile-name-container {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .profile-image {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 10px;
-    }
-    .post-name {
-      font-weight: bold;
-      margin: 0;
-    }
-    .post-date {
-      font-weight: bold;
-      margin: 0;
-      color: #777777;
-      text-align:right;
-    }
-    .post-message {
-      margin-bottom: 10px;
-    }
-    .post-image {
-      max-width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-    }
-    /* ................ */
 
   </style>
 </head>
@@ -102,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="button-group">
       <button><a href="homepage.php">Home</a></button>
       <button><a href="profile.php">Profile</a></button>
+      <button><a href="index.html">Log out</a></button>
     </div>
   </div>
    <!-- pic post -->
@@ -120,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="style">
 
 </div>
+
+
 <div class="fix-width-container"> 
 <div class="container">
     <div class="button-container ">

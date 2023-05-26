@@ -4,19 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-  <h1>Login</h1>
-  <form action="index.php" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required>
-    
-    <label for="passwords">Password:</label>
-    <input type="password" name="passwords" id="passwords" required>
-    
-    <button type="submit">Login</button>
+<body class="login-body">
+  <div class="login-page-container">
 
-  </form>
-  <a href="oldindex.html">Create new account</a>
+    <div class="logo-container">
+      <h1>Sobuj<span>Poth</span></h1>
+      <p>place of your memories...</p>
+    </div>
+    <div class="login-container">
+      <h1>Login</h1>
+      <form action="index.php" method="POST">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="passwords">Password:</label>
+          <input type="password" name="passwords" id="passwords" required>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <a href="oldindex.html">Create new account</a>
+    </div>
+
+    
+  </div>
+
 </body>
+
 </html>
