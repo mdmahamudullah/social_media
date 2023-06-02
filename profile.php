@@ -62,15 +62,17 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-   
+
   </style>
 </head>
+
 <body class="homepage-body">
   <!-- Navbar -->
   <div class="navbar">
@@ -84,101 +86,117 @@ $conn->close();
 
   <!-- pic post -->
   <div class="upload-container-container">
-      <div class="upload-container">
-        <!-- profile start -->
-            <h1>Profile</h1>
-  <img class="profile-picture" src="<?php echo $profile_picture; ?>" alt="<?php echo $profile_picture; ?>">
-  <form action="" method="POST" enctype="multipart/form-data">
-    <label for="profile_picture">Update Profile Picture:</label>
-    <input type="file" name="profile_picture" id="profile_picture">
-    <button type="submit">Upload</button>
-  </form>
-  <!-- profile end -->
-  <!-- user information start -->
+    <div class="upload-container">
+      <!-- profile start -->
+      <div style="display: flex; gap:150px;">
+        <div>
+          <h1>Profile</h1>
+          <img class="profile-picture" src="<?php echo $profile_picture; ?>" alt="<?php echo $profile_picture; ?>">
+        </div>
+        <div style="margin-top: 50px;">
+          <form action="" method="POST" enctype="multipart/form-data">
+            <label for="profile_picture">Update Profile Picture:</label>
+            <input type="file" name="profile_picture" id="profile_picture">
+            <button type="submit">Upload</button>
+          </form>
+        </div>
+      </div>
 
-  <h2><?php echo $first_name; ?> <?php echo $last_name; ?></h2>
-  <!-- <p>First Name: <?php echo $first_name; ?></p>
+
+      <!-- profile end -->
+      <!-- user information start -->
+
+      <h2><?php echo $first_name; ?> <?php echo $last_name; ?></h2>
+      <!-- <p>First Name: <?php echo $first_name; ?></p>
   <p>Last Name: <?php echo $last_name; ?></p> -->
-  <p>Date of Birth&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $date_of_birth; ?></p>
-  <p>Address&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $address; ?></p>
-  <p>Mobile Number&nbsp&nbsp: 0<?php echo $mobile_number; ?></p>
-  <p>Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $email; ?></p>
-  <a href="editProfile.php">Edit your profile</a>
-  <!-- user information end -->
+      <p>Date of Birth&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $date_of_birth; ?></p>
+      <p>Address&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $address; ?></p>
+      <p>Mobile Number&nbsp&nbsp: 0<?php echo $mobile_number; ?></p>
+      <p>Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $email; ?></p>
+      <a href="editProfile.php">Edit your profile</a>
+      <!-- user information end -->
 
-    <form action="post_photo.php" method="POST" enctype="multipart/form-data">
-      <label for="pic">Add an image</label>
-      <input type="file" name="pic" id="pic">
-      <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
-      <button type="submit">Post</button>
-    </form>
-   </div>
+      <form action="post_photo.php" method="POST" enctype="multipart/form-data">
+        <label for="pic">Add an image</label>
+        <input type="file" name="pic" id="pic">
+        <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
+        <button type="submit">Post</button>
+      </form>
+    </div>
   </div>
 
 
   <!-- search  start -->
-  
+
   <div class="style">
 
-  </div>
-<div class="fix-width-container"> 
+</div>
+<div class="post-background">
+
+</div>
+  <div class="fix-width-container">
     <div class="container">
-      <div class="button-container ">
+    <div class="button-container ">
           <!-- <input type="text" name="search_input" placeholder="Enter a name">
           <button type="submit"><a href="temp.php">search</a></button> -->
-          <form action="search.php" method="POST">
-               <input type="text" name="search_input" placeholder="Enter a name" required>
-               <button type="submit">Search</button>
+          <form action="search.php" method="POST" class="search-form">
+            <input type="text" name="search_input" placeholder="Enter a name" required>
+            <button type="submit">Search</button>
           </form>
+
       </div>
-            <!-- search  end -->
-  
+
+      <div class="search-under-space">
+
+      </div>
+      <!-- search  end -->
 
 
 
 
-  
-            <!-- Add post buttons here -->
-  
-  
-  
-        <!-- Add update form fields here -->
-        
-  
-  
-        <?php
-        // Display user's posts
-        while ($postRow = $postResult->fetch_assoc()) {
-          $postDate = $postRow['post_date'];
-          $message = $postRow['massage'];
-          $pic = $postRow['pic'];
-        ?>
+
+
+      <!-- Add post buttons here -->
+
+
+
+      <!-- Add update form fields here -->
+
+
+
+      <?php
+      // Display user's posts
+      while ($postRow = $postResult->fetch_assoc()) {
+        $postDate = $postRow['post_date'];
+        $message = $postRow['massage'];
+        $pic = $postRow['pic'];
+      ?>
 
         <div class="post-container">
           <div class="profile-name-container">
             <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Image" class="profile-image">
             <p class="post-name"><?php echo $firstName; ?> <?php echo $last_name; ?></p>
           </div>
-    
-    
+
+
           <p class="post-message"><?php echo $message; ?></p>
-          <?php if ($pic): ?>
+          <?php if ($pic) : ?>
             <img src="<?php echo $pic; ?>" alt="Post Image" class="post-image">
           <?php endif; ?>
-          
+
           <p class="post-date"><?php echo $postDate; ?></p>
         </div>
-        <?php
-        }
-        ?>
+      <?php
+      }
+      ?>
     </div>
-</div>
+  </div>
 
 
 
 
-<!-- ............. -->
+  <!-- ............. -->
 
 </body>
+
 </html>
- 

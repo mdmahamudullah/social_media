@@ -78,18 +78,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 </div>
 
+<div class="post-background">
 
+  </div>
 <div class="fix-width-container"> 
 <div class="container">
-    <div class="button-container ">
-        <!-- <input type="text" name="search_input" placeholder="Enter a name">
-        <button type="submit"><a href="temp.php">search</a></button> -->
-        <form action="search.php" method="POST">
-  <input type="text" name="search_input" placeholder="Enter a name" required>
-  <button type="submit">Search</button>
-  </form>
+<div class="button-container ">
+          <!-- <input type="text" name="search_input" placeholder="Enter a name">
+          <button type="submit"><a href="temp.php">search</a></button> -->
+          <form action="search.php" method="POST" class="search-form">
+            <input type="text" name="search_input" placeholder="Enter a name" required>
+            <button type="submit">Search</button>
+          </form>
 
-    </div>
+      </div>
+      <div class="search-under-space">
+
+      </div>
 
  <!-- search -->
   

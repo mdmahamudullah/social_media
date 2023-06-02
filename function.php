@@ -23,7 +23,7 @@ function registration(){
     $sql = "INSERT INTO profiles (passwords, first_name, last_name, date_of_birth, address, mobile_number, email, profile_picture) VALUES ('$passwords', '$firstName', '$lastName', '$dateOfBirth', '$address', '$mobileNumber', '$email', '$profilePicture')";
 
     if(mysqli_query($conn, $sql)){
-      header("location: index.html");
+      header("location: homepage.php");
     } else {
       echo "error";
     }

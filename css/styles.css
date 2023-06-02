@@ -28,7 +28,9 @@
 }
 
 .login-container {
-  background-color: rgb(255, 255, 255,70%);
+  background-color: rgb(255, 255, 255,50%);
+  /* background-color: transparent; */
+  backdrop-filter: blur(20px);
   padding: 30px;
   border-radius: 15px;
   border: 2px solid snow;
@@ -118,6 +120,125 @@ a:hover {
   margin: 10px 0 0;
 }
 
+/* ................................................................
+......................create account start.........................
+................................................................... */
+.create-account-body{
+  
+  background-image: url('../design-photo/login3.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  height: 100vh;
+  
+}
+
+.create-account-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-direction: row; */
+  flex-direction: row-reverse;
+  gap: 150px;
+  width: 1100px;
+  padding: 20px;
+  margin-left: 10%;
+  margin-right: 20%;
+}
+
+.create-login-container {
+  background-color: rgb(255, 255, 255,50%);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 15px;
+  border: 2px solid snow;
+  box-shadow: 0 2px 5px rgba(113, 112, 112, 0.1);
+  flex: 1;
+  margin-right: 20px;
+}
+
+.create-login-container h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #06140e;
+  margin: 0 0 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.create-login-container label {
+  display: block;
+  margin-bottom: 5px;
+  color: #17a05d;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="password"] {
+  width: 90%;
+  padding: 15px;
+  border: 1px solid #17a05d;
+  border-radius: 5px;
+}
+
+.create-login-container button[type="submit"] {
+  background: linear-gradient(to right, #17a05d, #4ac78a);
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.create-login-container button[type="submit"]:hover {
+  background: linear-gradient(to right, #4ac78a, #17a05d);
+}
+
+
+.create-logo-container {
+  text-align: left;
+}
+
+.create-logo-container h1 {
+  color: #603f00;
+  /* color: #0f6a3e; */
+  font-size: 40px;
+  font-weight: 700;
+  font-style: italic;
+  margin: 0;
+}
+.create-logo-container span {
+  color: #603f00;
+  color: #0f6a3e;
+  font-size: 40px;
+  margin: 0;
+}
+
+.create-logo-container p {
+  color: #e6fde3;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  margin: 10px 0 0;
+}
+
+
+/* ................................................................
+......................create account end...........................
+................................................................... */
 
 
 
@@ -127,6 +248,10 @@ a:hover {
   margin: 0;
   padding: 0;
   background-color: #ebfcff;
+  background-image: url('../design-photo/login0.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
   color: #333333;
 }
 
@@ -135,8 +260,14 @@ a:hover {
 ................................................................... */
 
 .navbar {
-  background-color: #66989a;
+  background-color: #4af8b0f2;
+  background-image: url('../design-photo/bg11.png');
+  
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
   overflow: hidden;
   position: fixed;
   top: 0;
@@ -212,7 +343,11 @@ a:hover {
 .............................................................. */
 .upload-container {
   width: 450px;
-  background-color: #ffffff;
+  background-color: #fffefe;
+  /* background-image: url('../design-photo/bg8.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left; */
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -282,24 +417,47 @@ a:hover {
 
 /* ***************search  container start************** */
 .style {
-  background-color: #3265a8;
-  /* background-image: url('/design-photo/blue-purple.png'); */
+  background-color: #7bc3b9f2;
+  border-bottom: 2px solid #ffffff;
+  /* background-image: url('../design-photo/greenyellow1.png');
+  background-repeat: no-repeat;
+  background-size: cover; */
+  position: fixed;
+  z-index: 1;
+  top: 0px;
   width: 100%;
   height: 100px;
+  
+}
+.post-background{
+  background-image: url('../design-photo/bg7.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  z-index: 0;
+  top: 100px;
+  width: 100%;
+  height:100vh;
+}
+.search-form{
+  display: flex;
+  position: fixed;
+  top: 30px;
+  z-index: 2;
 }
 .button-container {
   display: flex;
   justify-content: flex-end;
   margin: auto;
-  margin-bottom: 60px;
+  margin-bottom: 90px;
   margin-top: -90px;
   width: 780px;
 }
 
 .button-container button {
   background-color: #def2ff;
-  border: 2px solid #115703;
-  color: #212121;
+  border: 2px solid #ffffff;
+  color: #ffffff;
   padding: 10px 20px;
   font-size: 16px;
   border-radius: 5px;
@@ -311,7 +469,7 @@ a:hover {
 
 .button-container input {
   background-color: #effdff;
-  border: 2px solid #2ab2b7;
+  border: 2px solid #ffffff;
   color: #212121;
   padding: 10px 20px;
   font-size: 16px;
@@ -323,15 +481,22 @@ a:hover {
 .button-container button:hover {
   background-color: #b0f6ff;
 }
+
+.search-under-space{
+  height: 100px;
+}
+
 /* ***************search  container end************** */
 
 /* ***************post  container start************** */
 .post-container {
-  background-color: rgb(255, 255, 255, 80%);
+  background-color: rgb(255, 255, 255, 70%);
+  backdrop-filter: blur(20px);
   padding: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 2px solid #ffffff;
+  border-radius: 15px;
 }
 
 .profile-name-container {

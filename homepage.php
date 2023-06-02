@@ -32,7 +32,9 @@
       <input type="file" name="pic" id="pic">
       <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
       <button type="submit">Post</button>
-    </form>
+    <img src="../social_media/design-photo/bg12.jpg" alt="no"style=" width: 100%;margin-top:550px;">
+  </form>
+    
    </div>
   </div>
   
@@ -42,17 +44,25 @@
   <div class="style">
 
   </div>
+  <div class="post-background">
+
+  </div>
   <div class="fix-width-container"> 
   <div class="container">
       <div class="button-container ">
           <!-- <input type="text" name="search_input" placeholder="Enter a name">
           <button type="submit"><a href="temp.php">search</a></button> -->
-          <form action="search.php" method="POST">
-    <input type="text" name="search_input" placeholder="Enter a name" required>
-    <button type="submit">Search</button>
-    </form>
+          <form action="search.php" method="POST" class="search-form">
+            <input type="text" name="search_input" placeholder="Enter a name" required>
+            <button type="submit">Search</button>
+          </form>
 
       </div>
+
+      <div class="search-under-space">
+
+      </div>
+      
 
     <!-- Random Posts -->
    
