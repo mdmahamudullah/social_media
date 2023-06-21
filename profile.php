@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 if (!isset($_SESSION['user_id'])) {
   // User is not logged in, redirect to login page
-  header("Location: login.php");
+  header("Location: index.html");
   exit();
 }
 
@@ -20,6 +20,7 @@ if ($result->num_rows === 1) {
   $first_name = $row['first_name'];
   $last_name = $row['last_name'];
   $date_of_birth = $row['date_of_birth'];
+  $date_of_birth = date('d F, Y', strtotime($date_of_birth));
   $address = $row['address'];
   $mobile_number = $row['mobile_number'];
   $email = $row['email'];
@@ -47,15 +48,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
+
 // Fetch user's first name from profiles table
 $profileSql = "SELECT first_name FROM profiles WHERE id = '$user_id'";
 $profileResult = $conn->query($profileSql);
 $profileRow = $profileResult->fetch_assoc();
 $firstName = $profileRow['first_name'];
 
-// Fetch all posts of the user from posts table
-$postSql = "SELECT post_date, massage, pic FROM posts WHERE user_id = '$user_id' ORDER BY id DESC";
+// Fetch all posts of the user from posts table along with their ratings
+$postSql = "SELECT p.post_date, p.massage, p.pic, p.id, SUM(r.rate) AS total_rate
+            FROM posts p
+            LEFT JOIN ratings r ON p.id = r.post_id
+            WHERE p.user_id = '$user_id'
+            GROUP BY p.id
+            ORDER BY p.id DESC";
 $postResult = $conn->query($postSql);
+
 // Close the database connection
 $conn->close();
 ?>
@@ -68,9 +76,7 @@ $conn->close();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-
-  </style>
+  <script src="https://kit.fontawesome.com/c69a874bba.js" crossorigin="anonymous"></script>
 </head>
 
 <body class="homepage-body">
@@ -83,7 +89,6 @@ $conn->close();
     </div>
   </div>
   <!-- profile -->
-
   <!-- pic post -->
   <div class="upload-container-container">
     <div class="upload-container">
@@ -96,16 +101,13 @@ $conn->close();
         <div style="margin-top: 50px;">
           <form action="" method="POST" enctype="multipart/form-data">
             <label for="profile_picture">Update Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture">
+            <input type="file" name="profile_picture" id="profile_picture" required>
             <button type="submit">Upload</button>
           </form>
         </div>
       </div>
-
-
       <!-- profile end -->
       <!-- user information start -->
-
       <h2><?php echo $first_name; ?> <?php echo $last_name; ?></h2>
       <!-- <p>First Name: <?php echo $first_name; ?></p>
   <p>Last Name: <?php echo $last_name; ?></p> -->
@@ -115,7 +117,6 @@ $conn->close();
       <p>Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $email; ?></p>
       <a href="editProfile.php">Edit your profile</a>
       <!-- user information end -->
-
       <form action="post_photo.php" method="POST" enctype="multipart/form-data">
         <label for="pic">Add an image</label>
         <input type="file" name="pic" id="pic">
@@ -124,79 +125,70 @@ $conn->close();
       </form>
     </div>
   </div>
-
-
   <!-- search  start -->
-
   <div class="style">
-
-</div>
-<div class="post-background">
-
-</div>
+  </div>
+  <div class="post-background">
+  </div>
   <div class="fix-width-container">
     <div class="container">
-    <div class="button-container ">
-          <!-- <input type="text" name="search_input" placeholder="Enter a name">
-          <button type="submit"><a href="temp.php">search</a></button> -->
-          <form action="search.php" method="POST" class="search-form">
-            <input type="text" name="search_input" placeholder="Enter a name" required>
-            <button type="submit">Search</button>
-          </form>
-
+      <div class="button-container ">
+        <form action="search.php" method="POST" class="search-form">
+          <input type="text" name="search_input" placeholder="Enter a name" required>
+          <button type="submit">Search</button>
+        </form>
       </div>
-
       <div class="search-under-space">
-
       </div>
       <!-- search  end -->
-
-
-
-
-
-
       <!-- Add post buttons here -->
-
-
-
       <!-- Add update form fields here -->
-
-
-
       <?php
       // Display user's posts
       while ($postRow = $postResult->fetch_assoc()) {
         $postDate = $postRow['post_date'];
         $message = $postRow['massage'];
         $pic = $postRow['pic'];
+        $postId = $postRow['id'];
+        $totalRate = $postRow['total_rate'];
       ?>
-
         <div class="post-container">
           <div class="profile-name-container">
             <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Image" class="profile-image">
             <p class="post-name"><?php echo $firstName; ?> <?php echo $last_name; ?></p>
           </div>
-
-
           <p class="post-message"><?php echo $message; ?></p>
           <?php if ($pic) : ?>
-            <img src="<?php echo $pic; ?>" alt="Post Image" class="post-image">
+            <img src="<?php echo $pic; ?>" alt="Post Image" class="post-image" style="margin-left: auto;">
           <?php endif; ?>
+          <!-- Rating button and date  -->
+          <div style="display: flex; justify-content:space-between; align-items: center;">
+            <!-- Rating button form -->
 
-          <p class="post-date"><?php echo $postDate; ?></p>
+            <div style="display: flex;  align-items: center;">
+              <form action="profile-rate.php" method="POST">
+                <input type="hidden" name="post_id" value="<?php echo $postId; ?>">
+                <input type="hidden" name="rating" value="1">
+                <button type="submit" style="color: #fb972b; background: transparent; padding-left:0px;font-size: 20px;"><i class="fa-solid fa-star "></i></button>
+              </form>
+              <p class="total-rate">star : <?php if ($totalRate === null) {
+                                              echo 0;
+                                            } else {
+                                              echo $totalRate;
+                                            }  ?>
+              </p>
+            </div>
+            <p class="post-date"><?php echo $postDate; ?></p>
+          </div>
+
+
         </div>
       <?php
       }
       ?>
     </div>
   </div>
-
-
-
-
   <!-- ............. -->
-
 </body>
 
 </html>

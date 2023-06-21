@@ -16,3 +16,7 @@ if ($conn->connect_error) {
 // echo "Connected to the database successfully!";
 ?>
 
+<!-- $servername = "sql303.infinityfree.coms";
+$username = "if0_34383440";
+$password = "W7ekQgaQNS2J4";
+$dbname = "social_media"; -->

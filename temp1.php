@@ -1,52 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account</title>
-  <link rel="stylesheet" href="css/styles.css">
-</head>
-<body class="create-account-body">
-  <div class="create-account-container">
+<?php
+session_start(); // Start the session
 
-    <div class="create-logo-container">
-      <h1>Sobuj<span>Poth</span></h1>
-      <p>Place of your memories...</p>
-    </div>
-    <div class="create-login-container">
-      <h1>Create a New Account</h1>
-      <form action="oldindex.php" method="POST">
-        <div class="form-group">
-          <label for="first_name">First Name:</label>
-          <input type="text" name="first_name" id="first_name" required>
-        </div>
-        <div class="form-group">
-          <label for="last_name">Last Name:</label>
-          <input type="text" name="last_name" id="last_name" required>
-        </div>
-        <div class="form-group">
-          <label for="date_of_birth">Date of Birth:</label>
-          <input type="date" name="date_of_birth" id="date_of_birth" required>
-        </div>
-        <div class="form-group">
-          <label for="address">Address:</label>
-          <input type="text" name="address" id="address" required>
-        </div>
-        <div class="form-group">
-          <label for="mobile_number">Mobile Number:</label>
-          <input type="tel" name="mobile_number" id="mobile_number" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" name="email" id="email" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" name="passwords" id="password" required>
-        </div>
-        <button type="submit">Create Account</button>
-      </form>
-    </div>
-  </div>
-</body>
-</html>
+if (!isset($_SESSION['user_id'])) {
+  // User is not logged in, redirect to login page
+  header("Location: login.php");
+  exit();
+}
+
+// Database connection
+require_once 'dbconn.php';
+
+// Retrieve the rating from the POST data
+$rating = $_POST['rating'];
+$post_id = $_POST['post_id'];
+
+// Get the user ID from the session
+$user_id = $_SESSION['user_id'];
+
+// Check if the user has already rated the post
+$checkSql = "SELECT * FROM ratings WHERE user_id = '$user_id' AND post_id = '$post_id'";
+$checkResult = $conn->query($checkSql);
+
+if ($checkResult->num_rows > 0) {
+  // User has already rated the post, update the rating
+  $row = $checkResult->fetch_assoc();
+  $existingRating = $row['rate'];
+
+  if ($rating == $existingRating) {
+    // User clicked the rating button again, subtract the rating
+    $newRating = -$rating;
+  } else {
+    // User clicked a different rating button, update the rating
+    $newRating = $rating;
+  }
+
+  $updateSql = "UPDATE ratings SET rate = rate + $newRating WHERE user_id = '$user_id' AND post_id = '$post_id'";
+  if ($conn->query($updateSql) === TRUE) {
+    echo "Rating successfully updated in the database";
+    header("Location: temp.php");
+    // Rating successfully updated in the database
+    // ...
+  } else {
+    echo "Error updating rating: " . $conn->error;
+    // Error updating rating, handle error
+    // ...
+  }
+} else {
+  // User has not rated the post, insert the rating
+  $insertSql = "INSERT INTO ratings (user_id, post_id, rate) VALUES ('$user_id', '$post_id', '$rating')";
+  if ($conn->query($insertSql) === TRUE) {
+    echo "Rating successfully stored in the database";
+    header("Location: temp.php");
+    // Rating successfully stored in the database
+    // ...
+  } else {
+    echo "Error storing rating: " . $conn->error;
+    // Error storing rating, handle error
+    // ...
+  }
+}
+
+// Close the database connection
+$conn->close();
+?>

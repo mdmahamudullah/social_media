@@ -10,54 +10,34 @@ if (!isset($_SESSION['user_id'])) {
 // Database connection
 require_once 'dbconn.php';
 
-// Retrieve user information from the database
-$user_id = $_SESSION['user_id'];
-$sql = "SELECT * FROM profiles WHERE id = '$user_id'";
-$result = $conn->query($sql);
-
-if ($result->num_rows === 1) {
-  $row = $result->fetch_assoc();
-  $first_name = $row['first_name'];
-  $last_name = $row['last_name'];
-  $date_of_birth = $row['date_of_birth'];
-  $address = $row['address'];
-  $mobile_number = $row['mobile_number'];
-  $email = $row['email'];
-  $profile_picture = $row['profile_picture'];
-} else {
-  // User not found, handle error
-  // ...
-}
-
-// Handle profile picture update
+// Handle search query
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_FILES['profile_picture'])) {
-    // Process the uploaded profile picture
-    $targetDir = "profile/";
-    $targetFile = $targetDir . basename($_FILES["profile_picture"]["name"]);
-    move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $targetFile);
+  $searchInput = $_POST['search_input'];
 
-    // Update the profile picture in the database
-    $sql = "UPDATE profiles SET profile_picture = '$targetFile' WHERE id = '$user_id'";
-    if ($conn->query($sql) === TRUE) {
-      $profile_picture = $targetFile; // Update the profile picture variable
-    } else {
-      // Error updating profile picture, handle error
-      // ...
-    }
+  // Divide the user input into words
+  $keywords = explode(' ', $searchInput);
+
+  // Build the SQL query
+  $query = "SELECT p.first_name, p.last_name, p.profile_picture, po.post_date, po.massage, po.pic, p.id, SUM(r.rate) AS total_rate
+            FROM profiles p
+            JOIN posts po ON p.id = po.user_id
+            LEFT JOIN ratings r ON po.id = r.post_id
+            WHERE ";
+
+  $conditions = [];
+  foreach ($keywords as $keyword) {
+    $conditions[] = "(p.first_name LIKE '%$keyword%' OR p.last_name LIKE '%$keyword%')";
   }
-}
-// Fetch user's first name from profiles table
-$profileSql = "SELECT first_name FROM profiles WHERE id = '$user_id'";
-$profileResult = $conn->query($profileSql);
-$profileRow = $profileResult->fetch_assoc();
-$firstName = $profileRow['first_name'];
 
-// Fetch all posts of the user from posts table
-$postSql = "SELECT post_date, massage, pic FROM posts WHERE user_id = '$user_id' ORDER BY id DESC";
-$postResult = $conn->query($postSql);
-// Close the database connection
-$conn->close();
+  $query .= implode(' AND ', $conditions);
+  $query .= " GROUP BY po.id ORDER BY po.id DESC";
+
+  // Perform the search query
+  $searchResult = $conn->query($query);
+
+  // Close the database connection
+  $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,77 +46,50 @@ $conn->close();
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile</title>
+  <title>Search</title>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://kit.fontawesome.com/c69a874bba.js" crossorigin="anonymous"></script>
+
   <style>
+
 
   </style>
 </head>
 
-<body class="homepage-body">
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="button-group">
-      <button><a href="homepage.php">Home</a></button>
-      <button><a href="profile.php">Profile</a></button>
-      <button><a href="index.html">Log out</a></button>
-    </div>
-  </div>
-  <!-- profile -->
+<body>
 
-  <!-- pic post -->
-  <div class="upload-container-container">
-    <div class="upload-container">
-      <!-- profile start -->
-      <div style="display: flex; gap:150px;">
-        <div>
-          <h1>Profile</h1>
-          <img class="profile-picture" src="<?php echo $profile_picture; ?>" alt="<?php echo $profile_picture; ?>">
-        </div>
-        <div style="margin-top: 50px;">
-          <form action="" method="POST" enctype="multipart/form-data">
-            <label for="profile_picture">Update Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture">
-            <button type="submit">Upload</button>
-          </form>
-        </div>
+  <body class="homepage-body">
+    <!-- Navbar -->
+    <div class="navbar">
+      <div class="button-group">
+        <button><a href="homepage.php">Home</a></button>
+        <button><a href="profile.php">Profile</a></button>
+        <button><a href="index.html">Log out</a></button>
       </div>
-
-
-      <!-- profile end -->
-      <!-- user information start -->
-
-      <h2><?php echo $first_name; ?> <?php echo $last_name; ?></h2>
-      <!-- <p>First Name: <?php echo $first_name; ?></p>
-  <p>Last Name: <?php echo $last_name; ?></p> -->
-      <p>Date of Birth&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $date_of_birth; ?></p>
-      <p>Address&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $address; ?></p>
-      <p>Mobile Number&nbsp&nbsp: 0<?php echo $mobile_number; ?></p>
-      <p>Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $email; ?></p>
-      <a href="editProfile.php">Edit your profile</a>
-      <!-- user information end -->
-
-      <form action="post_photo.php" method="POST" enctype="multipart/form-data">
-        <label for="pic">Add an image</label>
-        <input type="file" name="pic" id="pic">
-        <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
-        <button type="submit">Post</button>
-      </form>
     </div>
-  </div>
+    <!-- pic post -->
+    <div class="upload-container-container">
+      <div class="upload-container">
+        <form action="post_photo.php" method="POST" enctype="multipart/form-data">
+          <label for="pic">Add an image</label>
+          <input type="file" name="pic" id="pic">
+          <textarea name="message" rows="5" cols="30" placeholder="What's on your mind?"></textarea>
+          <button type="submit">Post</button>
+        </form>
+      </div>
+    </div>
 
+    <!--search Buttons -->
+    <div class="style">
 
-  <!-- search  start -->
+    </div>
 
-  <div class="style">
+    <div class="post-background">
 
-</div>
-<div class="post-background">
-
-</div>
-  <div class="fix-width-container">
-    <div class="container">
-    <div class="button-container ">
+    </div>
+    <div class="fix-width-container">
+      <div class="container">
+        <div class="button-container ">
           <!-- <input type="text" name="search_input" placeholder="Enter a name">
           <button type="submit"><a href="temp.php">search</a></button> -->
           <form action="search.php" method="POST" class="search-form">
@@ -144,59 +97,48 @@ $conn->close();
             <button type="submit">Search</button>
           </form>
 
-      </div>
-
-      <div class="search-under-space">
-
-      </div>
-      <!-- search  end -->
-
-
-
-
-
-
-      <!-- Add post buttons here -->
-
-
-
-      <!-- Add update form fields here -->
-
-
-
-      <?php
-      // Display user's posts
-      while ($postRow = $postResult->fetch_assoc()) {
-        $postDate = $postRow['post_date'];
-        $message = $postRow['massage'];
-        $pic = $postRow['pic'];
-      ?>
-
-        <div class="post-container">
-          <div class="profile-name-container">
-            <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Image" class="profile-image">
-            <p class="post-name"><?php echo $firstName; ?> <?php echo $last_name; ?></p>
-          </div>
-
-
-          <p class="post-message"><?php echo $message; ?></p>
-          <?php if ($pic) : ?>
-            <img src="<?php echo $pic; ?>" alt="Post Image" class="post-image">
-          <?php endif; ?>
-
-          <p class="post-date"><?php echo $postDate; ?></p>
         </div>
-      <?php
-      }
-      ?>
-    </div>
-  </div>
+        <div class="search-under-space">
+
+        </div>
+
+        <!-- search -->
 
 
+        <?php if (isset($searchResult) && $searchResult->num_rows > 0) : ?>
+          <?php while ($row = $searchResult->fetch_assoc()) : ?>
+            <div class="post-container">
+              <div class="profile-name-container">
+                <img src="<?php echo $row['profile_picture']; ?>" alt="Profile Image" class="profile-image">
+                <p class="post-name"><?php echo $row['first_name']; ?> <?php echo $row['last_name']; ?></p>
+              </div>
+              <p class="post-message"><?php echo $row['massage']; ?></p>
+              <?php if (!empty($row['pic'])) : ?>
+                <img src="<?php echo $row['pic']; ?>" alt="Post Image" class="post-image">
+              <?php endif; ?>
+              <!-- rating -->
+              <div style="display: flex; justify-content:space-between; align-items: center;">
+                <div style="display: flex;align-items: center; gap:10px;">
+                  <p style="color: #fb972b; background: transparent; padding-left:0px;font-size: 20px;"><i class="fa-solid fa-star "></i></p>
+                  <p class="total-rate">Total Rate: <?php 
+                   if ($row['total_rate'] === null) {
+                    echo 0;
+                  } else {
+                    echo $row['total_rate'];
+                  }  ?>
+                  
+                </div>
 
+                <p class="post-date"><?php echo $row['post_date']; ?></p>
+              </div>
 
-  <!-- ............. -->
+            </div>
+          <?php endwhile; ?>
 
-</body>
+        <?php elseif (isset($searchResult) && $searchResult->num_rows === 0) : ?>
+          <p>No results found.</p>
+
+        <?php endif; ?>
+  </body>
 
 </html>

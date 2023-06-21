@@ -33,8 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header("Location: profile.php"); 
     exit();
   } else {
-    // Error inserting post, handle error
-    // ...
+    header("Location: profile.php");
   }
 
   // Close the database connection
@@ -51,20 +50,4 @@ function generateRandomName($length) {
   return $randomName;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Post Message</title>
-</head>
-<body>
-  <h1>Post Message</h1>
-  <form action="" method="POST" enctype="multipart/form-data">
-    <label for="pic">Upload Picture:</label>
-    <input type="file" name="pic" id="pic">
-    <textarea name="message" rows="5" cols="30" placeholder="Write your message here"></textarea>
-    <button type="submit">Post</button>
-  </form>
-</body>
-</html>
+

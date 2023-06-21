@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
   } else {
     // Invalid credentials, show error message
-    header("Location: index.html");
+    header("Location: oldindex.html");
   }
 
   // Close the database connection

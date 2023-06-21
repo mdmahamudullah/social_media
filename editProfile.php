@@ -3,7 +3,7 @@ session_start(); // Start the session
 
 if (!isset($_SESSION['user_id'])) {
   // User is not logged in, redirect to login page
-  header("Location: login.php");
+  header("Location: index.html");
   exit();
 }
 
@@ -20,6 +20,7 @@ if ($result->num_rows === 1) {
   $first_name = $row['first_name'];
   $last_name = $row['last_name'];
   $date_of_birth = $row['date_of_birth'];
+  $date_of_birth = date('d F, Y', strtotime($date_of_birth));
   $address = $row['address'];
   $mobile_number = $row['mobile_number'];
   $email = $row['email'];
@@ -36,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $targetDir = "profile/";
     $targetFile = $targetDir . basename($_FILES["profile_picture"]["name"]);
     move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $targetFile);
-
     // Update the profile picture in the database
     $sql = "UPDATE profiles SET profile_picture = '$targetFile' WHERE id = '$user_id'";
     if ($conn->query($sql) === TRUE) {
@@ -57,7 +57,6 @@ $firstName = $profileRow['first_name'];
 $postSql = "SELECT post_date, massage, pic FROM posts WHERE user_id = '$user_id' ORDER BY id DESC";
 $postResult = $conn->query($postSql);
 // Close the database connection
-
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +95,7 @@ $postResult = $conn->query($postSql);
         <div style="margin-top: 50px;">
           <form action="" method="POST" enctype="multipart/form-data">
             <label for="profile_picture">Update Profile Picture:</label>
-            <input type="file" name="profile_picture" id="profile_picture">
+            <input type="file" name="profile_picture" id="profile_picture" required>
             <button type="submit">Upload</button>
           </form>
         </div>
@@ -111,7 +110,7 @@ $postResult = $conn->query($postSql);
       <p>Address&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $address; ?></p>
       <p>Mobile Number&nbsp&nbsp: 0<?php echo $mobile_number; ?></p>
       <p>Email&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp: <?php echo $email; ?></p>
-      <a href="editProfile.php">Edit your profile</a>
+      <!-- <a href="editProfile.php">Edit your profile</a> -->
       <!-- user information end -->
       <form action="post_photo.php" method="POST" enctype="multipart/form-data">
         <label for="pic">Add an image</label>
@@ -187,7 +186,6 @@ $postResult = $conn->query($postSql);
               $profile_picture = $targetFile; // Update the profile picture variable
             } else {
               // Error updating profile picture, handle error
-              // ...
             }
           }
 
@@ -199,13 +197,14 @@ $postResult = $conn->query($postSql);
               $sql = "UPDATE profiles SET $field = '$value' WHERE id = '$user_id'";
               if ($conn->query($sql) !== TRUE) {
                 // Error updating field, handle error
-                // ...
               }
               header("Location: editProfile.php");
             }
           }
-
+          // ******************************************************
           // Handle profile deletion
+          // ******************************************************
+
           if (isset($_POST['delete_profile'])) {
 
             $sql = "DELETE FROM profiles WHERE id = '$user_id'";
@@ -218,7 +217,6 @@ $postResult = $conn->query($postSql);
               exit();
             } else {
               // Error deleting profile, handle error
-              // ...
             }
           }
         }

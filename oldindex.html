@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account</title>
+  <title>Account opening|SobujPoth</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -16,7 +16,7 @@
       <p>Place of your memories...</p>
     </div>
     <div class="create-login-container">
-      <h1>Create a New Account</h1>
+      <h1>Create Account First</h1>
       <form action="oldindex.php" method="POST">
         <!-- first name -->
         <div style="display:float; float: left; width: 45%;margin-right: 25px;">
@@ -52,7 +52,7 @@
         <div style="display:float; float: left; width: 45%;margin-right: 25px;">
           <div class="form-group">
             <label for="mobile_number">Mobile Number:</label>
-            <input type="tel" name="mobile_number" id="mobile_number"placeholder="01*** *** ***" required>
+            <input type="tel" name="mobile_number" id="mobile_number" pattern="01[0-9]{9}" minlength="11" maxlength="11" placeholder="01*********" required oninvalid="this.setCustomValidity('Invalid mobile number format.')" oninput="this.setCustomValidity('')">
           </div>
         </div>
         <!-- Email -->
@@ -74,9 +74,10 @@
         
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" name="passwords" id="password"placeholder="at least 8 character.eg.(hFj8$hUD)" required>
+          <input type="password" name="passwords" id="password"minlength="8" maxlength="32"placeholder="at least 8 character.eg.(hFj8$hUD)" required>
         </div>
         <button type="submit">Create Account</button>
+        <a href="index.html"> Already have an account?</a>
       </form>
     </div>
   </div>
